@@ -349,5 +349,14 @@ function route(){
 }
 window.addEventListener("hashchange",route);
 if(!$("#overlay")){const o=document.createElement("div");o.className="overlay";o.id="overlay";document.body.appendChild(o);}
-route();
+async function boot(){
+  if(window.SUPABASE_URL&&window.SUPABASE_ANON_KEY){
+    try{
+      const r=await fetch(window.SUPABASE_URL.replace(/\/$/,"")+"/rest/v1/places?select=*",{headers:{apikey:window.SUPABASE_ANON_KEY,Authorization:"Bearer "+window.SUPABASE_ANON_KEY}});
+      if(r.ok){const rows=await r.json();if(rows&&rows.length){window.PLACES=rows.map(x=>({id:x.id,name:x.name,layer:x.layer,category:x.category,address:x.address,neighborhood:x.neighborhood,hours:x.hours,phone:x.phone,note:x.note,bring:x.bring,coords:(x.lat!=null&&x.lng!=null)?[x.lat,x.lng]:null}));}}
+    }catch(_){/* fall back to built-in data */}
+  }
+  route();
+}
+boot();
 })();
