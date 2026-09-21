@@ -22,10 +22,16 @@ Built for the Build 313 Buildathon (Thriving Neighborhoods).
 Open `index.html`, or serve the folder: `python3 -m http.server 8137`.
 
 ## Deploy
-Every push to `main` deploys to Cloudflare Pages via `.github/workflows/deploy.yml`
+Once the repository secret below is configured, every push to `main` deploys to Cloudflare Pages via `.github/workflows/deploy.yml`
 (needs a `CLOUDFLARE_API_TOKEN` repo secret). Live at https://nearby-detroit.pages.dev
 
 ## Roadmap
 - Live resource data (Michigan 211 / findhelp) via Supabase.
 - Community "suggest a resource / report an issue".
 - More neighborhoods and cities.
+
+## Deployment setup
+The GitHub Actions repository secret `CLOUDFLARE_API_TOKEN` must have Cloudflare Pages edit permission for the configured account. Without it, automatic deployment fails. The workflow uploads only the five public application assets. An authenticated local Wrangler session can also deploy those files directly.
+
+## Mobile and Canvas
+Mobile navigation is available through the Menu button. An all-category search starts with seven connected category cards; tap one to expand its places. Use the zoom/fit controls or pinch to zoom, drag to pan, and switch to Map to browse locations. Recent searches and their coordinates are stored on the current device.

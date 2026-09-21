@@ -11,9 +11,13 @@ jobs:
       deployments: write
     steps:
       - uses: actions/checkout@v4
+      - name: Prepare public assets
+        run: |
+          mkdir -p public
+          cp index.html styles.css app.js data.js config.js public/
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: b52e6071798faa6d61697235c3f4aba5
-          command: pages deploy . --project-name=nearby-detroit --branch=main --commit-dirty=true
+          command: pages deploy public --project-name=nearby-detroit --branch=main --commit-dirty=true
